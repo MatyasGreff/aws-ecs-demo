@@ -1,12 +1,15 @@
 import os
+import os
+
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+"""from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
 from secrets_manager import get_secret
-
+"""
 app = Flask(__name__)
-db_config = get_secret()
+app.config['SECRET_KEY'] = os.environ.get('FLASK_SECRET_KEY')
+"""db_config = get_secret()
 
 app.config['SQLALCHEMY_DATABASE_URI'] = (
     f'postgresql+psycopg2://{db_config["username"]}:' +
@@ -37,17 +40,17 @@ class Transaction(db.Model):
     def __repr__(self):
         return f'{self.first_name} {self.last_name} spent {self.amount}'
 
-
+"""
 @app.route('/')
 def hello_world():
     return 'Hello world!'
 
-
+"""
 @app.route('/list_db')
 def list_db():
     transactions = Transaction.query.all()
     return '\n'.join([str(transaction) for transaction in transactions])
 
-
+"""
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
